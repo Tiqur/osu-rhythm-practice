@@ -17,7 +17,7 @@ const NavDiv = styled(FlexDiv)`
   background-color: #192035;
   width: 100%;
   height: 80px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 `;
 
 const FooterDiv = styled(FlexDiv)`
@@ -25,48 +25,78 @@ const FooterDiv = styled(FlexDiv)`
   align-items: center;
   background-color: #192035;
   width: 100%;
-  height: 40px;
+  height: 50px;
 `;
 
 const ContentContainer = styled.div`
   display: grid;
-  grid-area: 1/2/4/6;
   width: auto;
   height: 100%;
-  margin: 0px 40px 0px 40px;
+  gap: 50px;
+  margin: 0px 50px 0px 50px;
+  grid-template-columns: 250px 1fr 105px;
+  grid-template-rows: 300px 300px;
   grid-template-areas: 
-  "o o o . . . . . . . . ."
-  "o o o . . . . . . . . ."
-  "o o o . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . ."
-  ". . . . . . . . . . . .";
+  "o g g"
+  "c c k";
 `;
+
 
 
 const Options = styled(Container)`
   grid-area: o;
+  width: 250px;
 `;
+
+const Graph = styled(Container)`
+  grid-area: g;
+  width: 100%;
+`;
+
+const Canvas = styled(Container)`
+  grid-area: c;
+`;
+
+const Keys = styled(FlexDiv)`
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: -35px;
+  grid-area: k;
+`;
+
+const Key = styled(Container)`
+  background-color: #667293;
+  width: 140px;
+  height: 140px;
+`
 
 
 function App() {
   return (
     <BackgroundContainer>
+
+
       <NavDiv>
         <Text size={"35px"}>osu! Rhythm practice</Text>
       </NavDiv>
+
+
       <ContentContainer>
         <Options />
+        <Graph />
+        <Canvas />
+        <Keys>
+          <Key />
+          <Key />
+        </Keys>
       </ContentContainer>
+
+
       <FooterDiv>
 
       </FooterDiv>
+
+
     </BackgroundContainer>
   );
 }
