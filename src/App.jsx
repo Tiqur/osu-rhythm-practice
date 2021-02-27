@@ -38,7 +38,8 @@ const ContentContainer = styled.div`
   grid-template-rows: 300px 300px;
   grid-template-areas: 
   "o g g"
-  "c c k";
+  "c c k"
+  "s s s";
 `;
 
 
@@ -70,12 +71,40 @@ const Key = styled(Container)`
   height: 140px;
 `
 
+const ScoreTable = styled.table`
+  border-collapse: separate; 
+  border-spacing:0 10px;
+  margin-top: -10px;
+  grid-area: s;
+`;
+
+const RowElement = styled.td`
+  padding-left: 20px;
+  background-color: #26304F;
+
+  &:first-child {
+    border-radius: 8px 0 0 8px;
+  }  
+  
+  &:last-child {
+    border-radius: 0 8px 8px 0;
+  }
+`;
+
+const ScoreRow = () => {
+  return (
+    <tr height="46px">
+        <RowElement></RowElement>
+        <RowElement></RowElement>
+    </tr>
+  )
+}
+
+
 
 function App() {
   return (
     <BackgroundContainer>
-
-
       <NavDiv>
         <Text size={"35px"}>osu! Rhythm practice</Text>
       </NavDiv>
@@ -85,18 +114,27 @@ function App() {
         <Options />
         <Graph />
         <Canvas />
+
         <Keys>
           <Key />
           <Key />
         </Keys>
+
+        <ScoreTable>
+          <ScoreRow />
+          <ScoreRow />
+          <ScoreRow />
+          <ScoreRow />
+          <ScoreRow />
+          <ScoreRow />
+          <ScoreRow />
+          <ScoreRow />
+        </ScoreTable>
       </ContentContainer>
 
 
       <FooterDiv>
-
       </FooterDiv>
-
-
     </BackgroundContainer>
   );
 }
