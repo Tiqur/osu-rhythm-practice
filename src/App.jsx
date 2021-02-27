@@ -39,25 +39,31 @@ const ContentContainer = styled.div`
   grid-template-areas: 
   "o g g"
   "c c k"
+  "p p p"
   "s s s";
 `;
 
 
-
+// Options container
 const Options = styled(Container)`
   grid-area: o;
   width: 250px;
 `;
 
+
+// Graph container
 const Graph = styled(Container)`
   grid-area: g;
   width: 100%;
 `;
 
+// Game container
 const Canvas = styled(Container)`
   grid-area: c;
 `;
 
+
+// Keys
 const Keys = styled(FlexDiv)`
   flex-direction: column;
   justify-content: space-between;
@@ -71,10 +77,12 @@ const Key = styled(Container)`
   height: 140px;
 `
 
+
+// Table
 const ScoreTable = styled.table`
   border-collapse: separate; 
   border-spacing:0 10px;
-  margin-top: -10px;
+  margin-top: -20px;
   grid-area: s;
 `;
 
@@ -90,6 +98,16 @@ const RowElement = styled.td`
     border-radius: 0 8px 8px 0;
   }
 `;
+
+
+// Playback bar
+const PlaybackBar = styled.input.attrs({
+  type: 'range',
+})`
+  grid-area: p;
+  margin-top: -10px;
+`;
+
 
 const ScoreRow = () => {
   return (
@@ -119,6 +137,8 @@ function App() {
           <Key />
           <Key />
         </Keys>
+
+        <PlaybackBar></PlaybackBar>
 
         <ScoreTable>
           <ScoreRow />
