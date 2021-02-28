@@ -33,9 +33,9 @@ const ContentContainer = styled.div`
   width: auto;
   height: 100%;
   gap: 50px;
-  margin: 0px 50px 0px 50px;
+  margin: 0 50px 35px 50px;
   grid-template-columns: 250px 1fr 105px;
-  grid-template-rows: 300px 300px 1px;
+  grid-template-rows: 300px 300px;
   height: 700px;
   grid-template-areas: 
   "o g g"
@@ -83,14 +83,23 @@ const Table = styled(FlexDiv)`
   overflow-x: hidden;
   align-items: center;
   margin: 0px 50px 0px 50px;
-  margin-top: 40px;
+  margin-top: 35px;
   min-height: 300px;
   grid-area: s;
+
+  &::-webkit-scrollbar {
+    width: 18px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #425FB0;
+    border-radius: 9px;
+  }
 `;
 
 const TableRow = styled(FlexDiv)`
   background: #26304F;
-  margin: 0 10px 6px;
+  margin: 0 10px 6px 0;
   border-radius: 9px;
   height: 46px;
 
@@ -100,8 +109,6 @@ const TableRow = styled(FlexDiv)`
     transform: scale(1.004);
     cursor: pointer;
   }
-
-  
 `;
 
 
@@ -113,7 +120,6 @@ const PlaybackBar = styled.input.attrs({
 })`
   margin: 0px 50px 0px 50px;
   grid-area: p;
-  margin-top: -10px;
 `;
 
 
