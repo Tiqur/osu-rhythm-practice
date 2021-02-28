@@ -35,26 +35,23 @@ const ContentContainer = styled.div`
   gap: 50px;
   margin: 0px 50px 0px 50px;
   grid-template-columns: 250px 1fr 105px;
-  grid-template-rows: 300px 300px;
+  grid-template-rows: 300px 300px 1px;
+  height: 700px;
   grid-template-areas: 
   "o g g"
-  "c c k"
-  "p p p"
-  "s s s";
+  "c c k";
 `;
 
 
 // Options container
 const Options = styled(Container)`
   grid-area: o;
-  width: 250px;
 `;
 
 
 // Graph container
 const Graph = styled(Container)`
   grid-area: g;
-  width: 100%;
 `;
 
 // Game container
@@ -78,45 +75,38 @@ const Key = styled(Container)`
 `
 
 
-// Table
-const ScoreTable = styled.table`
-  border-collapse: separate; 
-  border-spacing:0 10px;
-  margin-top: -20px;
+// Scores
+const Table = styled(FlexDiv)`
+  display: block;
+  flex-direction: column;
+  overflow: scroll;;
+  overflow-x: hidden;
+  align-items: center;
+  margin: 0px 50px 0px 50px;
+  margin-top: 40px;
+  min-height: 300px;
   grid-area: s;
 `;
 
-const RowElement = styled.td`
-  padding-left: 20px;
-  background-color: #26304F;
-
-  &:first-child {
-    border-radius: 8px 0 0 8px;
-  }  
-  
-  &:last-child {
-    border-radius: 0 8px 8px 0;
-  }
+const TableRow = styled(FlexDiv)`
+  background: #26304F;
+  margin-bottom: 6px;
+  border-radius: 9px;
+  height: 46px;
+  width: 100%;
 `;
+
+
 
 
 // Playback bar
 const PlaybackBar = styled.input.attrs({
   type: 'range',
 })`
+  margin: 0px 50px 0px 50px;
   grid-area: p;
   margin-top: -10px;
 `;
-
-
-const ScoreRow = () => {
-  return (
-    <tr height="46px">
-        <RowElement></RowElement>
-        <RowElement></RowElement>
-    </tr>
-  )
-}
 
 
 
@@ -137,20 +127,20 @@ function App() {
           <Key />
           <Key />
         </Keys>
-
-        <PlaybackBar></PlaybackBar>
-
-        <ScoreTable>
-          <ScoreRow />
-          <ScoreRow />
-          <ScoreRow />
-          <ScoreRow />
-          <ScoreRow />
-          <ScoreRow />
-          <ScoreRow />
-          <ScoreRow />
-        </ScoreTable>
       </ContentContainer>
+
+      <PlaybackBar></PlaybackBar>
+
+      <Table>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+      </Table>
 
 
       <FooterDiv>
