@@ -8,7 +8,6 @@ import PlaybackBar from './components/PlaybackBar';
 
 // Main page
 const BackgroundContainer = styled(FlexDiv)`
-  background-color: #192035;
   flex-direction: column;
   width: 100%;
   height: 100vh;
@@ -56,8 +55,9 @@ const Keys = styled(FlexDiv)`
 `;
 
 const Key = styled(Container)`
-  background-color: #667293;
-  color: #26304F;
+  background-color: ${props => props.keyDown ? "#667293" : "#4e5874"};
+  transform: ${props => props.keyDown ? "scale(1.04)" : "scale(1)"};
+  color: ${props => props.keyDown ? "#26304F" : "#7783a3"};
   justify-content: center;
   align-items: center;
   font-family: 'Roboto';
@@ -89,11 +89,6 @@ const Canvas = styled(Container)`
 
 
 
-
-
-
-
-
 function App() {
 
   // Keys
@@ -102,6 +97,8 @@ function App() {
   let keyDown = [false, false];
   const [key1State, setKey1State] = useState(0);
   const [key2State, setKey2State] = useState(0);
+  const [key1Class, setKey1Class] = useState(0);
+  const [key2Class, setKey2Class] = useState(0);
 
   function keyPress(ekey, down) {
     if (ekey == key1 || ekey == key2) {
@@ -109,20 +106,12 @@ function App() {
       let keyID;
       if (ekey == key1) {
         if (down) setKey1State(ks => ks + 1);
+        setKey1Class(down)
         keyID = "key1";
       } else {
         if (down) setKey2State(ks => ks + 1);
+        setKey2Class(down)
         keyID = "key2"
-      }
-
-      if (down) {
-        document.getElementById(keyID).style.background = "#4e5874";
-        document.getElementById(keyID).style.transform = "scale(1.04)";
-        document.getElementById(keyID).style.color = "#667293";
-      } else {
-        document.getElementById(keyID).style.background = "#667293";
-        document.getElementById(keyID).style.transform = "scale(1)";
-        document.getElementById(keyID).style.color = "#26304F";
       }
    }
     return down;
@@ -174,8 +163,8 @@ function App() {
         <Canvas />
 
         <Keys>
-          <Key id="key1">{key1State}</Key>
-          <Key id="key2">{key2State}</Key>
+          <Key id="key1" keyDown={key1Class}>{key1State}</Key>
+          <Key id="key2" keyDown={key2Class}>{key2State}</Key>
         </Keys>
       </ContentContainer>
 
