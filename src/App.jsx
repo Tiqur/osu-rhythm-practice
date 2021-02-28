@@ -1,10 +1,10 @@
+import React, { useState, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 import FlexDiv from './components/FlexDiv';
 import Text from './components/Text';
 import Container from './components/Container';
 import { Table, TableRow } from './components/Table';
 import PlaybackBar from './components/PlaybackBar';
-import keyPress from './components/KeyPress';
 
 // Main page
 const BackgroundContainer = styled(FlexDiv)`
@@ -57,6 +57,11 @@ const Keys = styled(FlexDiv)`
 
 const Key = styled(Container)`
   background-color: #667293;
+  color: #26304F;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto';
+  font-size: 3em;
   width: 140px;
   height: 140px;
   transition: all .05s ease-in-out;
@@ -86,17 +91,76 @@ const Canvas = styled(Container)`
 
 
 
-document.onkeydown = (e) => {
-  keyPress(e.key, true);
-}
-
-document.onkeyup = (e) => {
-  keyPress(e.key, false);
-}
 
 
 
 function App() {
+
+  // Keys
+  const key1 = "x";
+  const key2 = "z";
+  let keyDown = [false, false];
+  const [key1State, setKey1State] = useState(0);
+  const [key2State, setKey2State] = useState(0);
+
+  function keyPress(ekey, down) {
+    if (ekey == key1 || ekey == key2) {
+      
+      let keyID;
+      if (ekey == key1) {
+        if (down) setKey1State(ks => ks + 1);
+        keyID = "key1";
+      } else {
+        if (down) setKey2State(ks => ks + 1);
+        keyID = "key2"
+      }
+
+      if (down) {
+        document.getElementById(keyID).style.background = "#4e5874";
+        document.getElementById(keyID).style.transform = "scale(1.04)";
+        document.getElementById(keyID).style.color = "#667293";
+      } else {
+        document.getElementById(keyID).style.background = "#667293";
+        document.getElementById(keyID).style.transform = "scale(1)";
+        document.getElementById(keyID).style.color = "#26304F";
+      }
+   }
+    return down;
+  }
+
+  function getIndex(key) {
+    if (key == key1) {
+      return 0;
+    } else if (key == key2) {
+      return 1;
+    }
+  }
+  
+
+  const keyPressHandle = (e) => {
+    let id = getIndex(e.key);
+    if (e.type == "keydown") {
+      if (keyDown[id]) return;
+      keyDown[id] = keyPress(e.key.toLowerCase(), true);
+    } else {
+      keyDown[id] = keyPress(e.key.toLowerCase(), false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("keydown", keyPressHandle, false);
+    document.addEventListener("keyup", keyPressHandle, false);
+
+    return () => {
+      document.removeEventListener("keydown", keyPressHandle, false);
+      document.removeEventListener("keyup", keyPressHandle, false);
+    };
+  }, []);
+
+
+
+
+
   return (
     <BackgroundContainer>
       <NavDiv>
@@ -110,8 +174,8 @@ function App() {
         <Canvas />
 
         <Keys>
-          <Key id="key1"/>
-          <Key id="key2"/>
+          <Key id="key1">{key1State}</Key>
+          <Key id="key2">{key2State}</Key>
         </Keys>
       </ContentContainer>
 
