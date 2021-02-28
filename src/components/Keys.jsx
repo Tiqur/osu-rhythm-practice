@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import FlexDiv from './FlexDiv';
 
-
 // Keys
 const Keys = styled(FlexDiv)`
   flex-direction: column;

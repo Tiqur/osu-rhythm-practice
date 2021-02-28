@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import FlexDiv from './components/FlexDiv';
 import Text from './components/Text';
 import Container from './components/Container';
+import { Table, TableRow } from './components/Table';
+import PlaybackBar from './components/PlaybackBar';
+import keyPress from './components/KeyPress';
 
 // Main page
 const BackgroundContainer = styled(FlexDiv)`
@@ -43,22 +46,6 @@ const ContentContainer = styled.div`
 `;
 
 
-// Options container
-const Options = styled(Container)`
-  grid-area: o;
-`;
-
-
-// Graph container
-const Graph = styled(Container)`
-  grid-area: g;
-`;
-
-// Game container
-const Canvas = styled(Container)`
-  grid-area: c;
-`;
-
 
 // Keys
 const Keys = styled(FlexDiv)`
@@ -72,55 +59,40 @@ const Key = styled(Container)`
   background-color: #667293;
   width: 140px;
   height: 140px;
+  transition: all .05s ease-in-out;
 `
 
 
-// Scores
-const Table = styled(FlexDiv)`
-  display: block;
-  flex-direction: column;
-  overflow: scroll;;
-  overflow-x: hidden;
-  align-items: center;
-  margin: 0px 50px 0px 50px;
-  margin-top: 35px;
-  min-height: 300px;
-  grid-area: s;
 
-  &::-webkit-scrollbar {
-    width: 18px;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: #425FB0;
-    border-radius: 9px;
-  }
+// Options container
+const Options = styled(Container)`
+  grid-area: o;
 `;
 
-const TableRow = styled(FlexDiv)`
-  background: #26304F;
-  margin: 0 10px 6px 0;
-  border-radius: 9px;
-  height: 46px;
+// Graph container
+const Graph = styled(Container)`
+  grid-area: g;
+`;
 
-  &:hover {
-    background: #2c3757;
-    transition: all .2s ease-in-out;
-    transform: scale(1.004);
-    cursor: pointer;
-  }
+// Game container
+const Canvas = styled(Container)`
+  grid-area: c;
 `;
 
 
 
 
-// Playback bar
-const PlaybackBar = styled.input.attrs({
-  type: 'range',
-})`
-  margin: 0px 50px 0px 50px;
-  grid-area: p;
-`;
+
+
+
+
+document.onkeydown = (e) => {
+  keyPress(e.key, true);
+}
+
+document.onkeyup = (e) => {
+  keyPress(e.key, false);
+}
 
 
 
@@ -138,8 +110,8 @@ function App() {
         <Canvas />
 
         <Keys>
-          <Key />
-          <Key />
+          <Key id="key1"/>
+          <Key id="key2"/>
         </Keys>
       </ContentContainer>
 
