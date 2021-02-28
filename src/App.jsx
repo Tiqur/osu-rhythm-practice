@@ -90,10 +90,18 @@ const Table = styled(FlexDiv)`
 
 const TableRow = styled(FlexDiv)`
   background: #26304F;
-  margin-bottom: 6px;
+  margin: 0 10px 6px;
   border-radius: 9px;
   height: 46px;
-  width: 100%;
+
+  &:hover {
+    background: #2c3757;
+    transition: all .2s ease-in-out;
+    transform: scale(1.004);
+    cursor: pointer;
+  }
+
+  
 `;
 
 
@@ -132,6 +140,40 @@ function App() {
       <PlaybackBar></PlaybackBar>
 
       <Table>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
+        <TableRow></TableRow>
         <TableRow></TableRow>
         <TableRow></TableRow>
         <TableRow></TableRow>
