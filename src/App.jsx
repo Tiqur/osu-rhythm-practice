@@ -1,33 +1,19 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import FlexDiv from './components/FlexDiv';
 import Text from './components/Text';
 import Container from './components/Container';
 import { Table, TableRow } from './components/Table';
 import PlaybackBar from './components/PlaybackBar';
+import FooterDiv from './components/Footer';
+import NavDiv from './components/NavDiv';
+
 
 // Main page
 const BackgroundContainer = styled(FlexDiv)`
   flex-direction: column;
   width: 100%;
   height: 100vh;
-`;
-
-const NavDiv = styled(FlexDiv)`
-  justify-content: center;
-  align-items: center;
-  background-color: #192035;
-  width: 100%;
-  height: 80px;
-  margin-bottom: 30px;
-`;
-
-const FooterDiv = styled(FlexDiv)`
-  justify-content: center;
-  align-items: center;
-  background-color: #192035;
-  width: 100%;
-  height: 50px;
 `;
 
 const ContentContainer = styled.div`
@@ -43,8 +29,6 @@ const ContentContainer = styled.div`
   "o g g"
   "c c k";
 `;
-
-
 
 // Keys
 const Keys = styled(FlexDiv)`
@@ -97,21 +81,18 @@ function App() {
   let keyDown = [false, false];
   const [key1State, setKey1State] = useState(0);
   const [key2State, setKey2State] = useState(0);
-  const [key1Class, setKey1Class] = useState(0);
-  const [key2Class, setKey2Class] = useState(0);
+  const [keyIsDown1, setKeyDown1] = useState(0);
+  const [keyIsDown2, setKeyDown2] = useState(0);
 
   function keyPress(ekey, down) {
     if (ekey == key1 || ekey == key2) {
       
-      let keyID;
       if (ekey == key1) {
         if (down) setKey1State(ks => ks + 1);
-        setKey1Class(down)
-        keyID = "key1";
+        setKeyDown1(down)
       } else {
         if (down) setKey2State(ks => ks + 1);
-        setKey2Class(down)
-        keyID = "key2"
+        setKeyDown2(down)
       }
    }
     return down;
@@ -159,12 +140,12 @@ function App() {
 
       <ContentContainer>
         <Options />
-        <Graph />
+          <Graph id="mainGraph"/>
         <Canvas />
 
         <Keys>
-          <Key id="key1" keyDown={key1Class}>{key1State}</Key>
-          <Key id="key2" keyDown={key2Class}>{key2State}</Key>
+          <Key id="key1" keyDown={keyIsDown1}>{key1State}</Key>
+          <Key id="key2" keyDown={keyIsDown2}>{key2State}</Key>
         </Keys>
       </ContentContainer>
 
