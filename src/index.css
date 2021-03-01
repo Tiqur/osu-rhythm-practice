@@ -9,3 +9,6 @@
   background-color: #26304F;
   border-radius: 8px;
 }
+.chartjs-render-monitor:hover {
+  cursor: crosshair;
+}

@@ -1,17 +1,22 @@
 import { Line } from 'react-chartjs-2';
 import Container from './Container';
+import { useClicks } from '../contexts/ClicksContext';
 
 
 const LineGraph = (props) => {
-    const graphData = {
-        labels: props.clicks.map(e => e.time),
+
+    const {clicks, setClicks} = useClicks();
+    const startTime = props.startTime;
+
+     const graphData = {
+        labels: clicks.map(e => e.time),
         datasets: [
         {
             label: 'Accuracy',
             fill: false,
             lineTension: 0,
             borderColor: '#ff0000',
-            data: ["84","84","96","86","96","93","91","89","94","88","90","96","89","88","93","90","88","95","86","84"]
+            data: ["84","84","96"," 86","96","93","91","89","94","88","90","96","89","88","93","90","88","95","86","84"]
         },
         {
             label: 'Unstable Rate',

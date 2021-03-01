@@ -8,7 +8,7 @@ import PlaybackBar from './components/PlaybackBar';
 import FooterDiv from './components/Footer';
 import NavDiv from './components/NavDiv';
 import LineGraph from './components/LineGraph';
-
+import { useClicks } from './contexts/ClicksContext';
 
 // Main page
 const BackgroundContainer = styled(FlexDiv)`
@@ -71,15 +71,15 @@ const Canvas = styled(Container)`
 
 function App() {
   let mapInProgress = false;
-  let startTime;
 
 
 
   // Keys
-  const key1 = "x";
-  const key2 = "z";
+  const key1 = "q";
+  const key2 = "w";
   let keyDown = [false, false];
-  const [clicks, setClicks] = useState([]);
+  const {clicks, setClicks} = useClicks();
+  const [startTime, setStartTime] = useState(0);
   const [key1State, setKey1State] = useState(0);
   const [key2State, setKey2State] = useState(0);
   const [keyIsDown1, setKeyDown1] = useState(0);
@@ -87,7 +87,7 @@ function App() {
 
   function keyPress(ekey, down) {
     if ((ekey == key1 || ekey == key2) && mapInProgress) {
-      setClicks(arr => [...arr, {"key": ekey, "pressed": down, "time": Date.now() - startTime}]);
+      if (down) setClicks(arr => [...arr, {"key": ekey, "pressed": down, "time": Date.now()}]);
       if (ekey == key1) {
         if (down) setKey1State(ks => ks + 1);
         setKeyDown1(down)
@@ -98,8 +98,12 @@ function App() {
    } else if (ekey == " " && down) {
      // Start
      console.log(!mapInProgress ? "Start" : "Stop")
-     startTime = Date.now();
      mapInProgress = !mapInProgress;
+
+     if (mapInProgress) {
+      setStartTime(Date.now());
+      setClicks([])
+     }
    }
     return down;
   }
@@ -143,7 +147,7 @@ function App() {
 
       <ContentContainer>
         <Options />
-        <LineGraph clicks={clicks}/>
+        <LineGraph startTime={startTime}/>
         <Canvas />
 
         <Keys>
