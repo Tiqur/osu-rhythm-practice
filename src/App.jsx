@@ -1,57 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import FlexDiv from './components/FlexDiv';
 import Text from './components/Text';
 import Container from './components/Container';
 import { Table, TableRow } from './components/Table';
 import PlaybackBar from './components/PlaybackBar';
 import FooterDiv from './components/Footer';
 import NavDiv from './components/NavDiv';
+import { Keys, Key } from './components/Keys';
 import LineGraph from './components/LineGraph';
+import ContentContainer from './components/ContentContainer';
+import BackgroundContainer from './components/BackgroundContainer';
 import { useClicks } from './contexts/ClicksContext';
-
-// Main page
-const BackgroundContainer = styled(FlexDiv)`
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-`;
-
-const ContentContainer = styled.div`
-  display: grid;
-  width: auto;
-  height: 100%;
-  gap: 50px;
-  margin: 0 50px 35px 50px;
-  grid-template-columns: 250px 1fr 105px;
-  grid-template-rows: 300px 300px;
-  height: 700px;
-  grid-template-areas: 
-  "o g g"
-  "c c k";
-`;
-
-// Keys
-const Keys = styled(FlexDiv)`
-  flex-direction: column;
-  justify-content: space-between;
-  margin-left: -35px;
-  grid-area: k;
-`;
-
-const Key = styled(Container)`
-  background-color: ${props => props.keyDown ? "#667293" : "#4e5874"};
-  transform: ${props => props.keyDown ? "scale(1.04)" : "scale(1)"};
-  color: ${props => props.keyDown ? "#26304F" : "#7783a3"};
-  justify-content: center;
-  align-items: center;
-  font-family: 'Roboto';
-  font-size: 3em;
-  width: 140px;
-  height: 140px;
-  transition: all .05s ease-in-out;
-`
-
 
 
 // Options container
@@ -65,14 +24,8 @@ const Canvas = styled(Container)`
 `;
 
 
-
-
-
-
-function App() {
+const App = () => {
   let mapInProgress = false;
-
-
 
   // Keys
   const key1 = "q";
@@ -85,7 +38,7 @@ function App() {
   const [keyIsDown1, setKeyDown1] = useState(0);
   const [keyIsDown2, setKeyDown2] = useState(0);
 
-  function keyPress(ekey, down) {
+  const keyPress = (ekey, down) => {
     if ((ekey == key1 || ekey == key2) && mapInProgress) {
       if (down) setClicks(arr => [...arr, {"key": ekey, "pressed": down, "time": Date.now()}]);
       if (ekey == key1) {
@@ -108,7 +61,7 @@ function App() {
     return down;
   }
 
-  function getIndex(key) {
+  const getIndex = (key) => {
     if (key == key1) {
       return 0;
     } else if (key == key2) {
