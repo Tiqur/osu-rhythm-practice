@@ -79,7 +79,7 @@ function App() {
   const key1 = "x";
   const key2 = "z";
   let keyDown = [false, false];
-  let clicks = [];
+  const [clicks, setClicks] = useState([]);
   const [key1State, setKey1State] = useState(0);
   const [key2State, setKey2State] = useState(0);
   const [keyIsDown1, setKeyDown1] = useState(0);
@@ -87,8 +87,7 @@ function App() {
 
   function keyPress(ekey, down) {
     if ((ekey == key1 || ekey == key2) && mapInProgress) {
-      clicks.push({"key": ekey, "pressed": down, "time": Date.now() - startTime})
-      console.log({"key": ekey, "pressed": down, "time": Date.now() - startTime})
+      setClicks(arr => [...arr, {"key": ekey, "pressed": down, "time": Date.now() - startTime}]);
       if (ekey == key1) {
         if (down) setKey1State(ks => ks + 1);
         setKeyDown1(down)
@@ -144,7 +143,7 @@ function App() {
 
       <ContentContainer>
         <Options />
-        <LineGraph />
+        <LineGraph clicks={clicks}/>
         <Canvas />
 
         <Keys>
@@ -156,39 +155,6 @@ function App() {
       <PlaybackBar />
 
       <Table>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
-        <TableRow></TableRow>
         <TableRow></TableRow>
         <TableRow></TableRow>
         <TableRow></TableRow>

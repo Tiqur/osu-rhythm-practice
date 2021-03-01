@@ -4,7 +4,7 @@ import Container from './Container';
 
 const LineGraph = (props) => {
     const graphData = {
-        labels: ["84","84","96","86","96","93","91","89","94","88","90"],
+        labels: props.clicks.map(e => e.time),
         datasets: [
         {
             label: 'Accuracy',
