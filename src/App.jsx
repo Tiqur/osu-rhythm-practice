@@ -74,19 +74,25 @@ const Canvas = styled(Container)`
 
 
 function App() {
+  let mapInProgress = false;
+  let startTime;
+
+
 
   // Keys
   const key1 = "x";
   const key2 = "z";
   let keyDown = [false, false];
+  let clicks = [];
   const [key1State, setKey1State] = useState(0);
   const [key2State, setKey2State] = useState(0);
   const [keyIsDown1, setKeyDown1] = useState(0);
   const [keyIsDown2, setKeyDown2] = useState(0);
 
   function keyPress(ekey, down) {
-    if (ekey == key1 || ekey == key2) {
-      
+    if ((ekey == key1 || ekey == key2) && mapInProgress) {
+      clicks.push({"key": ekey, "pressed": down, "time": Date.now() - startTime})
+      console.log({"key": ekey, "pressed": down, "time": Date.now() - startTime})
       if (ekey == key1) {
         if (down) setKey1State(ks => ks + 1);
         setKeyDown1(down)
@@ -94,6 +100,11 @@ function App() {
         if (down) setKey2State(ks => ks + 1);
         setKeyDown2(down)
       }
+   } else if (ekey == " " && down) {
+     // Start
+     console.log(!mapInProgress ? "Start" : "Stop")
+     startTime = Date.now();
+     mapInProgress = !mapInProgress;
    }
     return down;
   }
