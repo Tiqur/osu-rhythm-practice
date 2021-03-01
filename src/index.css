@@ -3,3 +3,9 @@
   margin: 0;
   padding: 0;
 }
+
+
+.chartjs-render-monitor {
+  background-color: #26304F;
+  border-radius: 8px;
+}

@@ -7,6 +7,7 @@ import { Table, TableRow } from './components/Table';
 import PlaybackBar from './components/PlaybackBar';
 import FooterDiv from './components/Footer';
 import NavDiv from './components/NavDiv';
+import LineGraph from './components/LineGraph';
 
 
 // Main page
@@ -56,11 +57,6 @@ const Key = styled(Container)`
 // Options container
 const Options = styled(Container)`
   grid-area: o;
-`;
-
-// Graph container
-const Graph = styled(Container)`
-  grid-area: g;
 `;
 
 // Game container
@@ -139,9 +135,6 @@ function App() {
   }, []);
 
 
-
-
-
   return (
     <BackgroundContainer>
       <NavDiv>
@@ -151,7 +144,7 @@ function App() {
 
       <ContentContainer>
         <Options />
-          <Graph id="mainGraph"/>
+        <LineGraph />
         <Canvas />
 
         <Keys>
@@ -160,7 +153,7 @@ function App() {
         </Keys>
       </ContentContainer>
 
-      <PlaybackBar></PlaybackBar>
+      <PlaybackBar />
 
       <Table>
         <TableRow></TableRow>
