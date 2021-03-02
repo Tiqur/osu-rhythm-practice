@@ -126,15 +126,47 @@ const App = () => {
     const Draw = new DrawUtils(canvas, ctx);
 
 
-    const centerX = canvas.width / 2;
+    let centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = 90;
 
-    
-    Draw.hitCircle(centerX+200, centerY, radius, 1.6);
-    Draw.hitCircle(centerX+100, centerY, radius, 1.4);
-    Draw.hitCircle(centerX, centerY, radius, 1.2);
+    const draw = () => {
+      // clear objects
+      Utils.drawCanvasBackground();
 
+      /* 
+      TODO:
+      Optimize to only draw if within game area
+      */
+      const hitCircles = [];
+
+      class HitCircle {
+        constructor(x) {
+          this.x = x;
+        }
+
+        draw() {
+          Draw.hitCircle(this.x, centerY, radius, 1.3)
+        }
+      }
+      // create objects
+      for (let i = 0; i < 100; i++) {
+        const hc = new HitCircle(centerX+i*100);
+        hitCircles.push(hc);
+      }
+
+      // draw objects
+      hitCircles.forEach(o => {
+        if (o.x > 0 && o.x < canvas.width) {
+          o.draw();
+        }
+      })
+
+      centerX -= 2;
+    }
+
+    // game loop
+    setInterval(draw, 10);
 
   
 
