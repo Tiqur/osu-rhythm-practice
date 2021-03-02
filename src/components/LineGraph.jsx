@@ -6,7 +6,7 @@ import { useGraphData } from '../contexts/GraphData';
 const LineGraph = (props) => {
 
     const {graphData, setGraphData} = useGraphData();
-    console.log(graphData)
+
     const data = {
     labels: graphData.clicks.map(e => e.time),
     datasets: [

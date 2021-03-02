@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import Text from './components/Text';
 import Container from './components/Container';
@@ -11,6 +11,8 @@ import LineGraph from './components/LineGraph';
 import ContentContainer from './components/ContentContainer';
 import BackgroundContainer from './components/BackgroundContainer';
 import { useGraphData } from './contexts/GraphData';
+import CanvasUtils from './utils/canvas';
+
 
 
 // Options container
@@ -18,13 +20,14 @@ const Options = styled(Container)`
   grid-area: o;
 `;
 
-// Game container
-const Canvas = styled(Container)`
+// Canvas container
+const Canvas = styled.canvas`
+  border-radius: 9px;
   grid-area: c;
 `;
 
-
 const App = () => {
+  const canvasRef = useRef(null);
   let mapInProgress = false;
 
   // Keys
@@ -56,9 +59,6 @@ const App = () => {
       })
     })
   }
-
-
-
 
   const keyPress = (ekey, down) => {
     if ((ekey == key1 || ekey == key2) && mapInProgress) {
@@ -99,7 +99,6 @@ const App = () => {
       return 1;
     }
   }
-  
 
   const keyPressHandle = (e) => {
     let id = getIndex(e.key);
@@ -111,16 +110,40 @@ const App = () => {
     }
   };
 
+
+
+
+
+
+
+
   useEffect(() => {
+    // Initialize canvas
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const Utils = new CanvasUtils(canvas, ctx);
+
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = centerY / 2;
+    
+    // Draw
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+    ctx.fillStyle = 'white';
+    ctx.fill();
+  
+
+    // Event listeners
     document.addEventListener("keydown", keyPressHandle, false);
     document.addEventListener("keyup", keyPressHandle, false);
+    window.addEventListener("resize", Utils.winResizeHandle);
 
     return () => {
       document.removeEventListener("keydown", keyPressHandle, false);
       document.removeEventListener("keyup", keyPressHandle, false);
+      window.removeEventListener("resize", Utils.winResizeHandle);
     };
   }, []);
-
 
   return (
     <BackgroundContainer>
@@ -132,7 +155,7 @@ const App = () => {
       <ContentContainer>
         <Options />
         <LineGraph />
-        <Canvas />
+        <Canvas ref={canvasRef} />
 
         <Keys>
           <Key id="key1" keyDown={keyIsDown1}>{key1State}</Key>
