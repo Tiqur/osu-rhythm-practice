@@ -129,10 +129,11 @@ const App = () => {
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
     const radius = 90;
+
     
-    Draw.hitCircle(centerX, centerY, radius, 1.5);
-    Draw.hitCircle(centerX+100, centerY, radius, 1.5);
-    Draw.hitCircle(centerX+200, centerY, radius, 1.5);
+    Draw.hitCircle(centerX+200, centerY, radius, 1.6);
+    Draw.hitCircle(centerX+100, centerY, radius, 1.4);
+    Draw.hitCircle(centerX, centerY, radius, 1.2);
 
 
   

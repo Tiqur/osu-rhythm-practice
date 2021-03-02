@@ -4,29 +4,27 @@ class DrawUtils {
         this.ctx = ctx;
     }
 
-    Circle(posX, posY, radius, color) {
+    Circle(posX, posY, radius, ac_width, color) {
         // draw basic circle
         this.ctx.beginPath();
         this.ctx.arc(posX, posY, radius, 0, 2 * Math.PI, false);
-        this.ctx.fillStyle = color;
-        this.ctx.fill();
+        this.ctx.strokeStyle  = color;
+        this.ctx.lineWidth = ac_width;
+        this.ctx.stroke();
         this.ctx.closePath();
     }
 
     hitCircle(posX, posY, radius, ar_dist) {
 
-        // ar_dist will likely change 
 
-        // Draw approach circle
-        this.Circle(posX, posY, radius * ar_dist, "#ffffff");
-        this.Circle(posX, posY, radius * (ar_dist - 0.05), "#26304F");
 
         // Draw main circle
-        this.Circle(posX, posY, radius, "#425FB0");
-        this.Circle(posX, posY, radius * 0.9, "#26304F");
-        this.Circle(posX, posY, radius * 0.85, "#494949");
-        this.Circle(posX, posY, radius * 0.75, "#26304F");
-
+        this.Circle(posX, posY, radius, 9, "#425FB0");
+        this.Circle(posX, posY, radius * 0.85, 12, "#494949");
+        
+        // ar_dist will likely change 
+        // Draw approach circle
+        this.Circle(posX, posY, radius * ar_dist, 5, "#979FB6");
         
     }
     
