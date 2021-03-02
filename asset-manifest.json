@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/osu-rhythm-practice/static/css/main.54f3eeee.chunk.css",
-    "main.js": "/osu-rhythm-practice/static/js/main.c01fdf69.chunk.js",
-    "main.js.map": "/osu-rhythm-practice/static/js/main.c01fdf69.chunk.js.map",
+    "main.js": "/osu-rhythm-practice/static/js/main.8d910170.chunk.js",
+    "main.js.map": "/osu-rhythm-practice/static/js/main.8d910170.chunk.js.map",
     "runtime-main.js": "/osu-rhythm-practice/static/js/runtime-main.29f3c6ed.js",
     "runtime-main.js.map": "/osu-rhythm-practice/static/js/runtime-main.29f3c6ed.js.map",
-    "static/js/2.2d66fb1e.chunk.js": "/osu-rhythm-practice/static/js/2.2d66fb1e.chunk.js",
-    "static/js/2.2d66fb1e.chunk.js.map": "/osu-rhythm-practice/static/js/2.2d66fb1e.chunk.js.map",
+    "static/js/2.61ba9064.chunk.js": "/osu-rhythm-practice/static/js/2.61ba9064.chunk.js",
+    "static/js/2.61ba9064.chunk.js.map": "/osu-rhythm-practice/static/js/2.61ba9064.chunk.js.map",
     "index.html": "/osu-rhythm-practice/index.html",
     "static/css/main.54f3eeee.chunk.css.map": "/osu-rhythm-practice/static/css/main.54f3eeee.chunk.css.map",
-    "static/js/2.2d66fb1e.chunk.js.LICENSE.txt": "/osu-rhythm-practice/static/js/2.2d66fb1e.chunk.js.LICENSE.txt"
+    "static/js/2.61ba9064.chunk.js.LICENSE.txt": "/osu-rhythm-practice/static/js/2.61ba9064.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.29f3c6ed.js",
-    "static/js/2.2d66fb1e.chunk.js",
+    "static/js/2.61ba9064.chunk.js",
     "static/css/main.54f3eeee.chunk.css",
-    "static/js/main.c01fdf69.chunk.js"
+    "static/js/main.8d910170.chunk.js"
   ]
 }
