@@ -126,47 +126,52 @@ const App = () => {
     const Draw = new DrawUtils(canvas, ctx);
 
 
-    let centerX = canvas.width / 2;
+    let gameTime = -1000;
     const centerY = canvas.height / 2;
     const radius = 90;
+    // change to bpm later
+    const secsBetweenEachObject = 100;
+    const AR = 9;
+
+
+    const hitCircles = [];
+
+    class HitCircle {
+      constructor(time) {
+        this.time = time;
+      }
+
+      draw() {
+        Draw.hitCircle(this.time, centerY, radius, AR, gameTime)
+      }
+    }
+
+    // create objects
+    for (let i = 0; i < 100; i++) {
+      const hc = new HitCircle((i+1)*secsBetweenEachObject);
+      hitCircles.push(hc);
+    }
+
+
 
     const draw = () => {
+      if (!mapInProgress) return;
       // clear objects
       Utils.drawCanvasBackground();
 
-      /* 
-      TODO:
-      Optimize to only draw if within game area
-      */
-      const hitCircles = [];
-
-      class HitCircle {
-        constructor(x) {
-          this.x = x;
-        }
-
-        draw() {
-          Draw.hitCircle(this.x, centerY, radius, 1.3)
-        }
-      }
-      // create objects
-      for (let i = 0; i < 100; i++) {
-        const hc = new HitCircle(centerX+i*100);
-        hitCircles.push(hc);
-      }
-
       // draw objects
       hitCircles.forEach(o => {
-        if (o.x > 0 && o.x < canvas.width) {
+        // draw if within canvas
+        if (o.time-gameTime > radius * 1.5 && o.time-gameTime  < canvas.width + radius) {
           o.draw();
         }
       })
 
-      centerX -= 2;
+      gameTime += 5; // draws every 10ms
     }
 
     // game loop
-    setInterval(draw, 10);
+    setInterval(draw, 5);
 
   
 
