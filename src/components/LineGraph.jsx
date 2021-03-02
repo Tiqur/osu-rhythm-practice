@@ -37,7 +37,7 @@ const LineGraph = (props) => {
 
     return (
         <Container style={{gridArea:"g"}}>
-            <Line data={data} options={{maintainAspectRatio: false}}/>
+            <Line data={data} options={{maintainAspectRatio: false, elements: { point:{ radius: 0 } }}}/>
         </Container>
     )
 }
