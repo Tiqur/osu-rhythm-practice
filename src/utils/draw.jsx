@@ -4,15 +4,30 @@ class DrawUtils {
         this.ctx = ctx;
     }
 
-    drawCircle() {
-        const centerX = this.canvas.width / 2;
-        const centerY = this.canvas.height / 2;
-        const radius = centerY / 2;
+    Circle(posX, posY, radius, color) {
+        // draw basic circle
+        this.ctx.beginPath();
+        this.ctx.arc(posX, posY, radius, 0, 2 * Math.PI, false);
+        this.ctx.fillStyle = color;
+        this.ctx.fill();
+        this.ctx.closePath();
+    }
+
+    hitCircle(posX, posY, radius, ar_dist) {
+
+        // ar_dist will likely change 
+
+        // Draw approach circle
+        this.Circle(posX, posY, radius * ar_dist, "#ffffff");
+        this.Circle(posX, posY, radius * (ar_dist - 0.05), "#26304F");
+
+        // Draw main circle
+        this.Circle(posX, posY, radius, "#425FB0");
+        this.Circle(posX, posY, radius * 0.9, "#26304F");
+        this.Circle(posX, posY, radius * 0.85, "#494949");
+        this.Circle(posX, posY, radius * 0.75, "#26304F");
+
         
-        // Draw
-        this.ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        this.ctx.fillStyle = 'white';
-        this.ctx.stroke();
     }
     
 }
