@@ -10,7 +10,7 @@ import { Keys, Key } from './components/Keys';
 import LineGraph from './components/LineGraph';
 import ContentContainer from './components/ContentContainer';
 import BackgroundContainer from './components/BackgroundContainer';
-import { useClicks } from './contexts/ClicksContext';
+import { useGraphData } from './contexts/GraphData';
 
 
 // Options container
@@ -31,16 +31,41 @@ const App = () => {
   const key1 = "q";
   const key2 = "w";
   let keyDown = [false, false];
-  const {clicks, setClicks} = useClicks();
-  const [startTime, setStartTime] = useState(0);
+  const {graphData, setGraphData} = useGraphData();
   const [key1State, setKey1State] = useState(0);
   const [key2State, setKey2State] = useState(0);
   const [keyIsDown1, setKeyDown1] = useState(0);
   const [keyIsDown2, setKeyDown2] = useState(0);
 
+
+
+  const updateData = (ekey, down) => {
+    // Set data
+    setGraphData(gd => {
+      const updatedClicks = [...gd.clicks, {"key": ekey, "pressed": down, "time": Date.now()}];
+      const downClicks = updatedClicks.filter(c => c.pressed);
+      const updatedAvgBpm = [...graphData.avg_bpm, Math.round((((downClicks.length / (downClicks[downClicks.length-1].time - gd.startTime) * 60000) / 4) * 100) / 100)];
+
+
+      return ({
+        startTime: gd.startTime,
+        clicks: updatedClicks,
+        avg_accuracy: [],
+        avg_unstable_rate: [],
+        avg_bpm: updatedAvgBpm 
+      })
+    })
+  }
+
+
+
+
   const keyPress = (ekey, down) => {
     if ((ekey == key1 || ekey == key2) && mapInProgress) {
-      if (down) setClicks(arr => [...arr, {"key": ekey, "pressed": down, "time": Date.now()}]);
+
+      // Update graph data
+      updateData(ekey, down);
+
       if (ekey == key1) {
         if (down) setKey1State(ks => ks + 1);
         setKeyDown1(down)
@@ -54,8 +79,14 @@ const App = () => {
      mapInProgress = !mapInProgress;
 
      if (mapInProgress) {
-      setStartTime(Date.now());
-      setClicks([])
+      // reset data
+      setGraphData({
+        startTime: Date.now(),
+        clicks: [],
+        avg_accuracy: [],
+        avg_unstable_rate: [],
+        avg_bpm: []
+      })
      }
    }
     return down;
@@ -100,7 +131,7 @@ const App = () => {
 
       <ContentContainer>
         <Options />
-        <LineGraph startTime={startTime}/>
+        <LineGraph />
         <Canvas />
 
         <Keys>

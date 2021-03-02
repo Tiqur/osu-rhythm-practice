@@ -7,6 +7,16 @@ export const useGraphData = () => {
 }
 
 export const GraphContextProvider = ({children}) => {
-    const [graphData, setGraphData] = useState({});
+
+    const data = {
+        startTime: Date.now(),
+        clicks: [],
+        avg_accuracy: [],
+        avg_unstable_rate: [],
+        avg_bpm: []
+    };
+
+    const [graphData, setGraphData] = useState(data);
+
     return <GraphDataContext.Provider value={{graphData, setGraphData}}>{children}</GraphDataContext.Provider>;
 }
