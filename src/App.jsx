@@ -44,8 +44,8 @@ const App = () => {
     setGraphData(gd => {
       const updatedClicks = [...gd.clicks, {"key": ekey, "pressed": down, "time": Date.now()}];
       const downClicks = updatedClicks.filter(c => c.pressed);
+      if (downClicks.length == 0) return(gd);
       const updatedAvgBpm = [...graphData.avg_bpm, Math.round((((downClicks.length / (downClicks[downClicks.length-1].time - gd.startTime) * 60000) / 4) * 100) / 100)];
-
 
       return ({
         startTime: gd.startTime,
