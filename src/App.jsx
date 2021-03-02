@@ -12,6 +12,7 @@ import ContentContainer from './components/ContentContainer';
 import BackgroundContainer from './components/BackgroundContainer';
 import { useGraphData } from './contexts/GraphData';
 import CanvasUtils from './utils/canvas';
+import DrawUtils from './utils/draw';
 
 
 
@@ -122,15 +123,10 @@ const App = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const Utils = new CanvasUtils(canvas, ctx);
+    const Draw = new DrawUtils(canvas, ctx);
 
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = centerY / 2;
-    
-    // Draw
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-    ctx.fillStyle = 'white';
-    ctx.fill();
+    Draw.drawCircle();
+
   
 
     // Event listeners
