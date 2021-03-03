@@ -94,16 +94,8 @@ const App = () => {
     return down;
   }
 
-  const getIndex = (key) => {
-    if (key == key1) {
-      return 0;
-    } else if (key == key2) {
-      return 1;
-    }
-  }
-
   const keyPressHandle = (e) => {
-    let id = getIndex(e.key);
+    let id = e.key == key1 ? 0 : 1;
     if (e.type == "keydown") {
       if (keyDown[id]) return;
       keyDown[id] = keyPress(e.key.toLowerCase(), true);
