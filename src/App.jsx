@@ -162,16 +162,16 @@ const App = () => {
       // draw objects
       hitCircles.forEach(o => {
         // draw if within canvas
-        if (o.time-gameTime > radius * 1.5 && o.time-gameTime  < canvas.width + radius) {
+        if (o.time-gameTime > 0 && o.time-gameTime  < canvas.width + radius) {
           o.draw();
         }
       })
 
-      gameTime += 5; // draws every 10ms
+      gameTime += 2; // draws every 10ms
     }
 
     // game loop
-    setInterval(draw, 5);
+    setInterval(draw, 2);
 
   
 
