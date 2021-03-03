@@ -62,6 +62,7 @@ const App = () => {
   }
 
   const keyPress = (ekey, down) => {
+    const now = Date.now();
     if ((ekey == key1 || ekey == key2) && mapInProgress) {
 
       // Update graph data
@@ -82,7 +83,7 @@ const App = () => {
      if (mapInProgress) {
       // reset data
       setGraphData({
-        startTime: Date.now(),
+        startTime: now,
         clicks: [],
         avg_accuracy: [],
         avg_unstable_rate: [],
@@ -126,7 +127,7 @@ const App = () => {
     const Draw = new DrawUtils(canvas, ctx);
 
 
-    let gameTime = -1000;
+    let gameTime = -2000;
     const centerY = canvas.height / 2;
     const radius = 90;
     // change to bpm later
@@ -134,7 +135,7 @@ const App = () => {
     const AR = 9;
 
 
-    const hitCircles = [];
+    const hitObjects = [];
 
     class HitCircle {
       constructor(time) {
@@ -146,12 +147,35 @@ const App = () => {
       }
     }
 
-    // create objects
-    for (let i = 0; i < 100; i++) {
-      const hc = new HitCircle((i+1)*secsBetweenEachObject);
-      hitCircles.push(hc);
+
+    class Slider {
+      constructor(time, endTime) {
+        this.time = time;
+        this.endTime = endTime;
+      }
+
+      draw() {
+        Draw.slider(this.time, this.endTime, centerY, radius, AR, gameTime)
+      }
     }
 
+
+
+
+
+    // create objects
+    for (let i = 0; i < 50; i++) {
+      const start = (i+1)*secsBetweenEachObject;
+      let ho;
+      if (i % 15 == 0) {
+         ho =  new Slider(start, (i+6)*secsBetweenEachObject);
+         i+=7
+      } else {
+        ho = new HitCircle(start);
+      }
+
+      hitObjects.push(ho);
+    }
 
 
     const draw = () => {
@@ -159,12 +183,17 @@ const App = () => {
       // clear objects
       Utils.drawCanvasBackground();
 
-      // draw objects
-      hitCircles.forEach(o => {
-        // draw if within canvas
-        if (o.time-gameTime > 0 && o.time-gameTime  < canvas.width + radius) {
+      // draw objects 
+      hitObjects.forEach(o => {
+        // draw if within canvas ( for optimization )
+        if (o.constructor.name == "HitCircle" && o.time-gameTime > 0 && o.time-gameTime < canvas.width + radius) {
+          // Draw hit-circle
+          o.draw();
+        } else if (o.endTime-gameTime > 0&& o.time-gameTime < canvas.width + radius) {
+          // Draw slider
           o.draw();
         }
+
       })
 
       gameTime += 2; // draws every 10ms
@@ -173,7 +202,7 @@ const App = () => {
     // game loop
     setInterval(draw, 2);
 
-  
+    
 
     // Event listeners
     document.addEventListener("keydown", keyPressHandle, false);
