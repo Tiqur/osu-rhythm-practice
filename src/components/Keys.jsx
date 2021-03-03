@@ -6,7 +6,6 @@ import Container from './Container';
 const Keys = styled(FlexDiv)`
   flex-direction: column;
   justify-content: space-between;
-  margin-left: -35px;
   grid-area: k;
 `;
 

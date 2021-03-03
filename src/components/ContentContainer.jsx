@@ -11,7 +11,7 @@ const ContentContainer = styled.div`
   height: 700px;
   grid-template-areas: 
   "o g g"
-  "c c k";
+  "k c c";
 `;
 
 
