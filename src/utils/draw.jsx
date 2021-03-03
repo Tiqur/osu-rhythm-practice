@@ -40,7 +40,7 @@ class DrawUtils {
         this.Circle(circleTime-gameTime, posY, radius, 9, "#425FB0");
         this.Circle(circleTime-gameTime, posY, radius * 0.85, 12, "#494949");
 
-        const preempt = AR == 5 ? 1200 : 1200 + (AR > 5 ? -750 : 600) * (AR + (AR > 5 ? -5 : 5)) / 5;
+        const preempt = AR < 5 ? 1800 - 120 * AR : 1950 - 150 * AR;
         const fadein = AR == 5 ? 800 : 800 + (AR > 5 ? -500 : 400) * (AR + (AR > 5 ? -5 : 5)) / 5;
 
 
