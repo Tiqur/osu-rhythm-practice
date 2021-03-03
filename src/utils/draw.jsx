@@ -40,17 +40,16 @@ class DrawUtils {
         this.Circle(circleTime-gameTime, posY, radius, 9, "#425FB0");
         this.Circle(circleTime-gameTime, posY, radius * 0.85, 12, "#494949");
 
-        const preempt = AR < 5 ? 1800 - 120 * AR : 1950 - 150 * AR;
-        const fadein = AR == 5 ? 800 : 800 + (AR > 5 ? -500 : 400) * (AR + (AR > 5 ? -5 : 5)) / 5;
-
+        const approachTime = AR < 5 ? 1800 - 120 * AR : 1950 - 150 * AR;
+        const approachFadeInTime = Math.min(800, approachTime);
 
 
         // Draw approach circle
-        if (circleTime-gameTime < preempt) {
+        if (circleTime-gameTime < approachTime) {
             const diameter = radius * 2;
             const ld = diameter * 3.0;
             const difference = circleTime - gameTime;        
-            let ar_radius = Math.round((diameter + (ld - diameter) * (difference < preempt + fadein && difference > 0 ? difference / (preempt + fadein) : 1)) / 2);
+            let ar_radius = Math.round((diameter + (ld - diameter) * (difference < approachTime + approachFadeInTime && difference > 0 ? difference / (approachTime + approachFadeInTime) : 1)) / 2);
             if (ar_radius == diameter+radius) ar_radius = 0;
             // TODO
             const alpha = 1.0
