@@ -77,6 +77,12 @@ class Game {
                 this.hitObjects[i].score = this.getScore(Math.abs(r_hitTime))
                 console.log(obj.score)
                 break;
+            } else if (this.notelock) {
+                let prev_note = i > 0 ? this.hitObjects[i-1].time + this.mehTime : 0;
+                if (prev_note < hitTime) { // If click is after previous note
+                    // Notelock
+                    console.log("Shake")
+                }     
             }
         }
     }
