@@ -1,7 +1,7 @@
 class Circle {
     constructor(time) {
       this.time = time;
-      this.hit = null;
+      this.score = null;
     }
 }
 
@@ -10,7 +10,7 @@ class Slider {
     constructor(time, endTime) {
         this.time = time;
         this.endTime = endTime;
-        this.hit = null;
+        this.score = null;
     }
 }
 

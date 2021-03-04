@@ -131,7 +131,7 @@ const App = () => {
       od: 8,
       hp: 5,
       ar: 9,
-      notelock: false,
+      notelock: true,
       keys: ["z", "x"]
     }
 
