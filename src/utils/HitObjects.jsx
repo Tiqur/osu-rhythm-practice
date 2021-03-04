@@ -1,10 +1,7 @@
 class Circle {
     constructor(time) {
       this.time = time;
-    }
-
-    draw() {
-        console.log("Circle")
+      this.hit = null;
     }
 }
 
@@ -13,10 +10,7 @@ class Slider {
     constructor(time, endTime) {
         this.time = time;
         this.endTime = endTime;
-    }
-
-    draw() {
-        console.log("Slider")
+        this.hit = null;
     }
 }
 

@@ -18,24 +18,44 @@ class Game {
         // Object type
         const type = o.constructor.name;
 
+        // TODO: optimize this
         // Draw only if within canvas ( for optimization )
         switch (type) {
             case "Circle":
-                if (o.time-gameTime > 0 && o.time-gameTime < this.canvas.width + 90) {
-                    this.draw.hitCircle(o.time, this.canvas.height / 2, 90, this.ar, gameTime)
+                if (o.time-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && !o.hit) {
+                    this.draw.hitCircle(o.time, this.canvas.height / 2, 90, this.ar, gameTime);
                 }
-            break;
+                break;
             case "Slider":
-                if (o.endTime-gameTime > 0 && o.time-gameTime < this.canvas.width + 90) {
-                    this.draw.slider(o.time, o.endTime, this.canvas.height / 2, 90, this.ar, gameTime)
+                if (o.endTime-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && !o.hit) {
+                    this.draw.slider(o.time, o.endTime, this.canvas.height / 2, 90, this.ar, gameTime);
                 }
-            break;
+                break;
+        }
+        
+        // Miss
+        if ((type == "Circle" ? o.time : o.endTime) - gameTime < 0 && !o.hit) {
+            o.hit = "miss";
+            console.log("miss");
         }
       })
+
+
+
     }
 
     hit(time) {
+        const hitTime = time - this.startTime;
 
+        // TODO: optimize this
+        for (let i = 0; i < this.hitObjects.length; i++) {
+            let obj = this.hitObjects[i];
+            if (hitTime > obj.time - 100 && hitTime < obj.time + 100) {
+                obj.hit = "hit";
+                console.log("hit");
+                break;
+            }  
+        }
     }
 }
 

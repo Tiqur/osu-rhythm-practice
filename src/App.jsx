@@ -62,8 +62,7 @@ const App = () => {
     })
   }
 
-  const keyPress = (ekey, down) => {
-    const now = Date.now();
+  const keyPress = (ekey, down, time) => {
     if ((ekey == key1 || ekey == key2) && mapInProgress) {
 
       // Update graph data
@@ -84,7 +83,7 @@ const App = () => {
      if (mapInProgress) {
       // reset data
       setGraphData({
-        startTime: now,
+        startTime: time,
         clicks: [],
         avg_accuracy: [],
         avg_unstable_rate: [],
@@ -95,15 +94,6 @@ const App = () => {
     return down;
   }
 
-  const keyPressHandle = (e) => {
-    let id = e.key == key1 ? 0 : 1;
-    if (e.type == "keydown") {
-      if (keyDown[id]) return;
-      keyDown[id] = keyPress(e.key.toLowerCase(), true);
-    } else {
-      keyDown[id] = keyPress(e.key.toLowerCase(), false);
-    }
-  };
 
 
 
@@ -118,20 +108,22 @@ const App = () => {
     const ctx = canvas.getContext('2d');
 
     // create objects
-    const secsBetweenEachObject = 100;
-    const hitObjects = [];
-    for (let i = 0; i < 520; i++) {
-      const start = (i+1)*secsBetweenEachObject;
-      let ho;
-      if (i % 15 == 0) {
-         ho =  new Slider(start, (i+6)*secsBetweenEachObject);
-         i+=7
-      } else {
-        ho = new Circle(start);
-      }
+    // const secsBetweenEachObject = 100;
+     const hitObjects = [];
+    // for (let i = 0; i < 520; i++) {
+    //   const start = (i+1)*secsBetweenEachObject;
+    //   let ho;
+    //   if (i % 15 == 0) {
+    //      ho =  new Slider(start, (i+6)*secsBetweenEachObject);
+    //      i+=7
+    //   } else {
+    //     ho = new Circle(start);
+    //   }
 
-      hitObjects.push(ho);
-    }
+    //   hitObjects.push(ho);
+    // }
+
+    hitObjects.push(new Circle(1000))
 
     // Options ( Use user input later )
     const gameOptions = {
@@ -161,7 +153,19 @@ const App = () => {
     })();
     
 
-
+    // Handle key press
+    const keyPressHandle = (e) => {
+      const id = e.key == key1 ? 0 : 1;
+      const time = Date.now();
+      if (e.type == "keydown") {
+        if (keyDown[id]) return;
+        keyDown[id] = keyPress(e.key.toLowerCase(), true, time);
+        game.hit(time)
+      } else {
+        keyDown[id] = keyPress(e.key.toLowerCase(), false, time);
+      }
+    };
+  
     
 
     // Event listeners
