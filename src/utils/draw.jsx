@@ -35,12 +35,19 @@ class DrawUtils {
     }
 
 
-    hitCircle(circleTime, posY, radius, AR, gameTime) {
+    hitCircle(circleTime, posY, radius, AR, gameTime, game) {
 
         const timeDifference = circleTime - gameTime;
+        let mainCircleColor = "#425FB0";
+
+        if (game.visual_aid) {
+            const score = game.getScore(timeDifference);
+            if (score == "great") mainCircleColor = "#53CE1A"
+        }
+
 
         // Draw main circle
-        this.Circle(timeDifference, posY, radius, 9, "#425FB0");
+        this.Circle(timeDifference, posY, radius, 9, mainCircleColor);
         this.Circle(timeDifference, posY, radius * 0.85, 12, "#494949");
 
         const approachTime = AR < 5 ? 1800 - 120 * AR : 1950 - 150 * AR;
@@ -60,7 +67,7 @@ class DrawUtils {
         }
     }
 
-    slider(sliderStartTime, sliderEndTime, posY, radius, AR, gameTime) {  
+    slider(sliderStartTime, sliderEndTime, posY, radius, AR, gameTime, game) {  
         const startTimeDifference = sliderStartTime-gameTime;
         const endTimeDifference = sliderEndTime-gameTime;
         this.Arcs(sliderStartTime, sliderEndTime, posY, radius, gameTime);
@@ -68,7 +75,7 @@ class DrawUtils {
         this.Line(startTimeDifference+radius*1.5-12, posY+radius, endTimeDifference+radius*1.5, posY+radius);
         if (startTimeDifference < 0) sliderStartTime = gameTime;
         if (sliderStartTime > sliderEndTime) sliderStartTime = sliderEndTime;
-        this.hitCircle(sliderStartTime, posY, radius, AR, gameTime);
+        this.hitCircle(sliderStartTime, posY, radius, AR, gameTime, game);
     }
 
 

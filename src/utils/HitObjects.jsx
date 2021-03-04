@@ -10,7 +10,8 @@ class Slider {
     constructor(time, endTime) {
         this.time = time;
         this.endTime = endTime;
-        this.score = null;
+        this.startScore = null; // beginning hitcircle
+        this.score = null;      // final score based on startScore
     }
 }
 

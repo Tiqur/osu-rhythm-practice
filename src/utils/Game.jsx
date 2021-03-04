@@ -11,6 +11,7 @@ class Game {
         this.ar = options.ar;
         this.od = options.od;
         this.keys = options.keys;
+        this.visual_aid = options.visual_aid;
         this.notelock = options.notelock;
         this.mehTime = 200 - 10 * this.od;
         this.goodTime = 140 - 8 * this.od;
@@ -29,12 +30,12 @@ class Game {
             switch (type) {
                 case "Circle":
                     if (o.time-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && !o.score) {
-                        this.draw.hitCircle(o.time, this.canvas.height / 2, 90, this.ar, gameTime);
+                        this.draw.hitCircle(o.time, this.canvas.height / 2, 90, this.ar, gameTime, this);
                     }
                     break;
                 case "Slider":
                     if (o.endTime-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && !o.score) {
-                        this.draw.slider(o.time, o.endTime, this.canvas.height / 2, 90, this.ar, gameTime);
+                        this.draw.slider(o.time, o.endTime, this.canvas.height / 2, 90, this.ar, gameTime, this);
                     }
                     break;
             }
