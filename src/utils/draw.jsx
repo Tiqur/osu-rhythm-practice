@@ -36,33 +36,37 @@ class DrawUtils {
 
 
     hitCircle(circleTime, posY, radius, AR, gameTime) {
+
+        const timeDifference = circleTime - gameTime;
+
         // Draw main circle
-        this.Circle(circleTime-gameTime, posY, radius, 9, "#425FB0");
-        this.Circle(circleTime-gameTime, posY, radius * 0.85, 12, "#494949");
+        this.Circle(timeDifference, posY, radius, 9, "#425FB0");
+        this.Circle(timeDifference, posY, radius * 0.85, 12, "#494949");
 
         const approachTime = AR < 5 ? 1800 - 120 * AR : 1950 - 150 * AR;
         const approachFadeInTime = Math.min(800, approachTime);
 
 
         // Draw approach circle
-        if (circleTime-gameTime < approachTime) {
+        if (timeDifference < approachTime) {
             const diameter = radius * 2;
             const ld = diameter * 3.0;
-            const difference = circleTime - gameTime;        
-            let ar_radius = Math.round((diameter + (ld - diameter) * (difference < approachTime + approachFadeInTime && difference > 0 ? difference / (approachTime + approachFadeInTime) : 1)) / 2);
+            let ar_radius = Math.round((diameter + (ld - diameter) * (timeDifference < approachTime + approachFadeInTime && timeDifference > 0 ? timeDifference / (approachTime + approachFadeInTime) : 1)) / 2);
             if (ar_radius == diameter+radius) ar_radius = 0;
             // TODO
             const alpha = 1.0
             
-            this.Circle(circleTime-gameTime, posY, ar_radius, 5, `rgba(151, 159, 182, ${alpha})`);
+            this.Circle(timeDifference, posY, ar_radius, 5, `rgba(151, 159, 182, ${alpha})`);
         }
     }
 
     slider(sliderStartTime, sliderEndTime, posY, radius, AR, gameTime) {  
+        const startTimeDifference = sliderStartTime-gameTime;
+        const endTimeDifference = sliderEndTime-gameTime;
         this.Arcs(sliderStartTime, sliderEndTime, posY, radius, gameTime);
-        this.Line(sliderStartTime-gameTime+radius*1.5-12, posY-radius, sliderEndTime-gameTime+radius*1.5, posY-radius);
-        this.Line(sliderStartTime-gameTime+radius*1.5-12, posY+radius, sliderEndTime-gameTime+radius*1.5, posY+radius);
-        if (sliderStartTime-gameTime < 0) sliderStartTime = gameTime;
+        this.Line(startTimeDifference+radius*1.5-12, posY-radius, endTimeDifference+radius*1.5, posY-radius);
+        this.Line(startTimeDifference+radius*1.5-12, posY+radius, endTimeDifference+radius*1.5, posY+radius);
+        if (startTimeDifference < 0) sliderStartTime = gameTime;
         if (sliderStartTime > sliderEndTime) sliderStartTime = sliderEndTime;
         this.hitCircle(sliderStartTime, posY, radius, AR, gameTime);
     }

@@ -11,9 +11,10 @@ import LineGraph from './components/LineGraph';
 import ContentContainer from './components/ContentContainer';
 import BackgroundContainer from './components/BackgroundContainer';
 import { useGraphData } from './contexts/GraphData';
-import CanvasUtils from './utils/canvas';
-import DrawUtils from './utils/draw';
-
+import CanvasUtils from './utils/Canvas';
+import DrawUtils from './utils/Draw';
+import Game from './utils/Game';
+import { Circle, Slider } from './utils/HitObjects';
 
 
 // Options container
@@ -32,8 +33,8 @@ const App = () => {
   let mapInProgress = false;
 
   // Keys
-  const key1 = "q";
-  const key2 = "w";
+  const key1 = "x";
+  const key2 = "z";
   let keyDown = [false, false];
   const {graphData, setGraphData} = useGraphData();
   const [key1State, setKey1State] = useState(0);
@@ -115,85 +116,47 @@ const App = () => {
     // Initialize canvas
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    const Utils = new CanvasUtils(canvas, ctx);
-    const Draw = new DrawUtils(canvas, ctx);
-
-
-    let gameTime = -2000;
-    const centerY = canvas.height / 2;
-    const radius = 90;
-    // change to bpm later
-    const secsBetweenEachObject = 100;
-    const AR = 9;
-
-
-    const hitObjects = [];
-
-    class HitCircle {
-      constructor(time) {
-        this.time = time;
-      }
-
-      draw() {
-        Draw.hitCircle(this.time, centerY, radius, AR, gameTime)
-      }
-    }
-
-
-    class Slider {
-      constructor(time, endTime) {
-        this.time = time;
-        this.endTime = endTime;
-      }
-
-      draw() {
-        Draw.slider(this.time, this.endTime, centerY, radius, AR, gameTime)
-      }
-    }
-
-
-
-
 
     // create objects
-    for (let i = 0; i < 50; i++) {
+    const secsBetweenEachObject = 100;
+    const hitObjects = [];
+    for (let i = 0; i < 520; i++) {
       const start = (i+1)*secsBetweenEachObject;
       let ho;
       if (i % 15 == 0) {
          ho =  new Slider(start, (i+6)*secsBetweenEachObject);
          i+=7
       } else {
-        ho = new HitCircle(start);
+        ho = new Circle(start);
       }
 
       hitObjects.push(ho);
     }
 
+    // Options ( Use user input later )
+    const gameOptions = {
+      bpm: 180,
+      od: 8,
+      hp: 5,
+      ar: 9,
+      notelock: false,
+      keys: ["z", "x"]
+    }
+
+    const Draw = new DrawUtils(canvas, ctx);
+    const Utils = new CanvasUtils(canvas, ctx);
+    const game = new Game(hitObjects, gameOptions, canvas, Draw);
+    game.startTime = Date.now();
 
 
     // Game Loop
     (function gameLoop() { 
-      if (mapInProgress) {
-
-      // clear objects
-      Utils.drawCanvasBackground();
-
-      // draw objects 
-      hitObjects.forEach(o => {
-        // draw if within canvas ( for optimization )
-        if (o.constructor.name == "HitCircle" && o.time-gameTime > 0 && o.time-gameTime < canvas.width + radius) {
-          // Draw hit-circle
-          o.draw();
-        } else if (o.endTime-gameTime > 0&& o.time-gameTime < canvas.width + radius) {
-          // Draw slider
-          o.draw();
-        }
-
-      })
-
-      gameTime += 2; // draws every 10ms
+      // If in progress
+      if (game.startTime) {
+        // Clear objects
+        Utils.drawCanvasBackground();
+        game.render(Date.now());
       }
-
       window.requestAnimationFrame(gameLoop);
     })();
     
