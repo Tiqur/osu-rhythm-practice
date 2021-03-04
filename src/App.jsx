@@ -170,8 +170,11 @@ const App = () => {
     }
 
 
-    const draw = () => {
-      if (!mapInProgress) return;
+
+    // Game Loop
+    (function gameLoop() { 
+      if (mapInProgress) {
+
       // clear objects
       Utils.drawCanvasBackground();
 
@@ -189,10 +192,12 @@ const App = () => {
       })
 
       gameTime += 2; // draws every 10ms
-    }
+      }
 
-    // game loop
-    setInterval(draw, 2);
+      window.requestAnimationFrame(gameLoop);
+    })();
+    
+
 
     
 
