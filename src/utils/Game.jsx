@@ -73,7 +73,7 @@ class Game {
             const r_hitTime = hitTime - obj.time;
 
             // Absolute value of actual hit-time
-            if (hitTime <= obj.time + this.mehTime && hitTime >= obj.time - this.mehTime) {
+            if (hitTime <= obj.time + this.mehTime && hitTime >= obj.time - this.mehTime && !obj.score) {
                 this.hitObjects[i].score = this.getScore(Math.abs(r_hitTime))
                 console.log(obj.score)
                 break;
