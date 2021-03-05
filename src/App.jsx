@@ -158,14 +158,9 @@ const App = () => {
     const keyPressHandle = (e) => {
       const id = e.key == key1 ? 0 : 1;
       const time = Date.now();
-      if (e.type == "keydown") {
-        if (keyDown[id]) return;
-        keyDown[id] = keyPress(e.key.toLowerCase(), true, time);
-        game.hit(time, true)
-      } else {
-        keyDown[id] = keyPress(e.key.toLowerCase(), false, time);
-        game.hit(time, false)
-      }
+      if (e.type == "keydown" && keyDown[id]) return;
+      keyDown[id] = keyPress(e.key.toLowerCase(), e.type == "keydown", time);
+      game.hit(time, e.type == "keydown")
     };
   
     
