@@ -110,20 +110,20 @@ const App = () => {
     // create objects
     const secsBetweenEachObject = 100;
     const hitObjects = [];
-    for (let i = 0; i < 520; i++) {
-      const start = (i+1)*secsBetweenEachObject;
-      let ho;
-      if (i % 15 == 0) {
-         ho =  new Slider(start, (i+6)*secsBetweenEachObject);
-         i+=7
-      } else {
-        ho = new Circle(start);
-      }
+    // for (let i = 0; i < 520; i++) {
+    //   const start = (i+1)*secsBetweenEachObject;
+    //   let ho;
+    //   if (i % 15 == 0) {
+    //      ho =  new Slider(start, (i+6)*secsBetweenEachObject);
+    //      i+=7
+    //   } else {
+    //     ho = new Circle(start);
+    //   }
 
-      hitObjects.push(ho);
-    }
+    //   hitObjects.push(ho);
+    // }
 
-    //hitObjects.push(new Circle(1000))
+    hitObjects.push(new Slider(1000, 1500))
 
     // Options ( Use user input later )
     const gameOptions = {
@@ -161,9 +161,10 @@ const App = () => {
       if (e.type == "keydown") {
         if (keyDown[id]) return;
         keyDown[id] = keyPress(e.key.toLowerCase(), true, time);
-        game.hit(time)
+        game.hit(time, true)
       } else {
         keyDown[id] = keyPress(e.key.toLowerCase(), false, time);
+        game.hit(time, false)
       }
     };
   

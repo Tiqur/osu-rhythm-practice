@@ -31,20 +31,20 @@ class Game {
                 case "Circle":
                     if (o.time-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && !o.score) {
                         this.draw.hitCircle(o.time, this.canvas.height / 2, 90, this.ar, gameTime, this);
+                    } else if (o.time - gameTime < -this.mehTime && !o.score) {
+                        o.score = "miss"
                     }
                     break;
                 case "Slider":
-                    if (o.endTime-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && !o.score) {
+                    if (o.endTime-gameTime > 0 && o.time-gameTime < this.canvas.width + 90) {  // if within canvas
                         this.draw.slider(o.time, o.endTime, this.canvas.height / 2, 90, this.ar, gameTime, this);
+                    } else if (o.time - gameTime < -this.mehTime && !o.score) { // Beginning of slider and start / end are not scored yet
+                        o.score = "miss"
+                        console.log("miss")
                     }
                     break;
             }
             
-            // Miss
-            if (o.time - gameTime < -this.mehTime && !o.score) {
-                o.score = "miss";
-                console.log("miss");
-            }
         })
 
 
@@ -54,37 +54,50 @@ class Game {
     getScore = (acc) => {
         // Return correct score value
         switch(true) {
-            case acc <= this.mehTime && acc > this.goodTime:     // Meh
+            case acc <= this.mehTime && acc > this.goodTime:     // Meh  
                 return "meh";
             case acc <= this.goodTime && acc > this.greatTime:   // Good
                 return "good";
-            case acc <= this.greatTime:                           // Great
+            case acc <= this.greatTime:                          // Great
                 return "great";
         }
     }
 
-    hit(time) {
+    hit(time, keyDown) {
         const hitTime = time - this.startTime;
         
         // TODO: optimize this
         for (let i = 0; i < this.hitObjects.length; i++) {
             let obj = this.hitObjects[i];
-            
+            const isSlider = obj.constructor.name === "Slider";
+
             // Hit time relative to the object
             const r_hitTime = hitTime - obj.time;
 
+            const withinThreshold = hitTime <= obj.time + this.mehTime && hitTime >= obj.time - this.mehTime;
+
             // Absolute value of actual hit-time
-            if (hitTime <= obj.time + this.mehTime && hitTime >= obj.time - this.mehTime && !obj.score) {
+            if (keyDown && withinThreshold && !isSlider) {  // Within hit threshold and isn't slider
                 this.hitObjects[i].score = this.getScore(Math.abs(r_hitTime))
-                console.log(obj.score)
                 break;
-            } else if (this.notelock) {
+            } else if (keyDown && hitTime <= obj.time + this.mehTime && isSlider) {  // ( hitting early on a slider will always result in a "Great" )
+                this.hitObjects[i].score = "great"
+            } else if (keyDown && hitTime > obj.time - this.mehTime) { // ( hitting in the middle of a slider will cause a "good" )
+                this.hitObjects[i].score = "good"
+            } else if (!keyDown && isSlider) {  // Lift key
+                if (hitTime > obj.time - this.mehTime && hitTime <= obj.endTime) { // ( lifting up in the middle of a slider will decrease score value by 1 )
+                    this.hitObjects[i].score = (obj.score === "great" ? "good" : "meh")
+                }
+            } else if (keyDown && this.notelock) {
                 let prev_note = i > 0 ? this.hitObjects[i-1].time + this.mehTime : 0;
                 if (prev_note < hitTime) { // If click is after previous note
                     // Notelock
-                    console.log("Shake")
+                // console.log("Shake")
                 }     
             }
+            
+            console.log(obj.score)
+
         }
     }
 }
