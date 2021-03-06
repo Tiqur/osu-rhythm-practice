@@ -1,4 +1,4 @@
-import { checkMaxIfStatementsInShader } from "pixi.js";
+import hitNormal from '../assets/hitnormal.mp3'
 
 class Game {
     constructor(hitObjects, options, canvas, draw) {
@@ -64,8 +64,8 @@ class Game {
     }
 
     hit(time, keyDown) {
+        const audio = new Audio(hitNormal);
         const hitTime = time - this.startTime;
-        
         // TODO: optimize this
         for (let i = 0; i < this.hitObjects.length; i++) {
             let obj = this.hitObjects[i];
@@ -77,8 +77,9 @@ class Game {
             const withinThreshold = hitTime <= obj.time + this.mehTime && hitTime >= obj.time - this.mehTime;
 
             // Absolute value of actual hit-time
-            if (keyDown && withinThreshold && !isSlider) {  // Within hit threshold and isn't slider
-                this.hitObjects[i].score = this.getScore(Math.abs(r_hitTime))
+            if (keyDown && withinThreshold) {  // Within hit threshold
+                if (!this.hitObjects[i].score) audio.play();
+                this.hitObjects[i].score = isSlider ? "great" : this.getScore(Math.abs(r_hitTime));
                 break;
             } else if (keyDown && hitTime <= obj.time + this.mehTime && isSlider) {  // ( hitting early on a slider will always result in a "Great" )
                 this.hitObjects[i].score = "great"
