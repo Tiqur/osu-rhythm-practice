@@ -65,7 +65,12 @@ class Game {
 
     hit(time, keyDown) {
         const audio = new Audio(hitNormal);
+
+        // TEMP: Apply user input
+        audio.volume = 0.2;
+
         const hitTime = time - this.startTime;
+        
         // TODO: optimize this
         for (let i = 0; i < this.hitObjects.length; i++) {
             let obj = this.hitObjects[i];
