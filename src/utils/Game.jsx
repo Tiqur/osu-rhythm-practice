@@ -29,17 +29,18 @@ class Game {
             // Draw only if within canvas ( for optimization )
             switch (type) {
                 case "Circle":
-                    if (o.time-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && !o.score) {
+                    if (o.time-gameTime > 0 && o.time-gameTime < this.canvas.width + 90 && o.score != 0) {
                         this.draw.hitCircle(o.time, this.canvas.height / 2, 90, this.ar, gameTime, this);
-                    } else if (o.time - gameTime < -this.mehTime && !o.score) {
-                        o.score = "miss"
+                    } else if (o.time - gameTime < -this.mehTime && o.score != 0) {
+                        o.score = 0;
+                        console.log("miss")
                     }
                     break;
                 case "Slider":
                     if (o.endTime-gameTime > 0 && o.time-gameTime < this.canvas.width + 90) {  // if within canvas
                         this.draw.slider(o.time, o.endTime, this.canvas.height / 2, 90, this.ar, gameTime, this);
-                    } else if (o.time - gameTime < -this.mehTime && !o.score) { // Beginning of slider and start / end are not scored yet
-                        o.score = "miss"
+                    } else if (o.time - gameTime < -this.mehTime && o.score != 0) { // Beginning of slider and start / end are not scored yet
+                        o.score = 0;
                         console.log("miss")
                     }
                     break;
@@ -55,11 +56,11 @@ class Game {
         // Return correct score value
         switch(true) {
             case acc <= this.mehTime && acc > this.goodTime:     // Meh  
-                return "meh";
+                return 50;
             case acc <= this.goodTime && acc > this.greatTime:   // Good
-                return "good";
+                return 100;
             case acc <= this.greatTime:                          // Great
-                return "great";
+                return 300;
         }
     }
 
@@ -88,15 +89,16 @@ class Game {
             // Absolute value of actual hit-time
             if (keyDown && withinThreshold) {  // Within hit threshold
                 if (!this.hitObjects[i].score) audio.play();
-                this.hitObjects[i].score = isSlider ? "great" : this.getScore(Math.abs(r_hitTime));
+                this.hitObjects[i].score = isSlider ? 300 : this.getScore(Math.abs(r_hitTime));
                 break;
             } else if (keyDown && hitTime <= obj.time + this.mehTime && isSlider) {  // ( hitting early on a slider will always result in a "Great" )
-                this.hitObjects[i].score = "great"
+                this.hitObjects[i].score = 300;
             } else if (keyDown && hitTime > obj.time - this.mehTime) { // ( hitting in the middle of a slider will cause a "good" )
-                this.hitObjects[i].score = "good"
+                this.hitObjects[i].score = 100;
             } else if (!keyDown && isSlider) {  // Lift key
                 if (hitTime > obj.time - this.mehTime && hitTime <= obj.endTime) { // ( lifting up in the middle of a slider will decrease score value by 1 )
-                    this.hitObjects[i].score = (obj.score === "great" ? "good" : "meh")
+                    this.hitObjects[i].score = (obj.score === 300 ? 100 : 50);
+                    score += this.hitObjects[i].score;
                 }
             } else if (keyDown && this.notelock) {
                 let prev_note = i > 0 ? this.hitObjects[i-1].time + this.mehTime : 0;
