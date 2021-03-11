@@ -70,6 +70,10 @@ class Game {
         audio.volume = 0.2;
 
         const hitTime = time - this.startTime;
+
+        // calculte accuracy
+        let max_score = this.hitObjects.length * 300;
+        let score = 0;
         
         // TODO: optimize this
         for (let i = 0; i < this.hitObjects.length; i++) {
