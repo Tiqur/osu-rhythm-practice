@@ -73,7 +73,7 @@ class Game {
         const hitTime = time - this.startTime;
 
         // calculte accuracy
-        let max_score = this.hitObjects.length * 300;
+        let max_score = 0;
         let score = 0;
         
         // TODO: optimize this
@@ -89,7 +89,7 @@ class Game {
             // Absolute value of actual hit-time
             if (keyDown && withinThreshold) {  // Within hit threshold
                 if (!this.hitObjects[i].score) audio.play();
-                this.hitObjects[i].score = isSlider ? 300 : this.getScore(Math.abs(r_hitTime));
+                this.hitObjects[i].score = isSlider ? 300: this.getScore(Math.abs(r_hitTime));
                 break;
             } else if (keyDown && hitTime <= obj.time + this.mehTime && isSlider) {  // ( hitting early on a slider will always result in a "Great" )
                 this.hitObjects[i].score = 300;
@@ -108,7 +108,13 @@ class Game {
                 }     
             }
             
-            console.log(obj.score)
+            score += obj.score;
+            max_score = this.hitObjects.filter(e => e.score != null).length * 300;
+            const accuracy = score / max_score;
+
+            
+            // Assign current accuracy to each object for accurate graph representation
+            this.hitObjects[i].accuracy = accuracy;
 
         }
     }

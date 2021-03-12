@@ -2,6 +2,7 @@ class Circle {
     constructor(time) {
       this.time = time;
       this.score = null;
+      this.accuracy = null;
     }
 }
 
@@ -11,6 +12,7 @@ class Slider {
         this.time = time;
         this.endTime = endTime;
         this.score = null;
+        this.accuracy = null;
     }
 }
 
